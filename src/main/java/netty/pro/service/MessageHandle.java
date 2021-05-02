@@ -24,7 +24,7 @@ public class MessageHandle extends  ChannelHandlerAdapter{
 
         // 请求报文
         if (protocol.getType() == MessageType.REQ.value()) {
-            System.out.println("服务端----1-----::");
+            System.out.println("服务端----1-----::" + "SERVER::" +protocol.getBody().getClassName());
             //应答报文
             protocol.getBody().setClassName("SERVER::" +protocol.getBody().getClassName());
             protocol.getBody().setMethodName("SERVER::" +protocol.getBody().getMethodName());

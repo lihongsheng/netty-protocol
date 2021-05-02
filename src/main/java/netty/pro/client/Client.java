@@ -11,6 +11,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.CharsetUtil;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
+import netty.pro.common.JsonSerialize;
 import netty.pro.protocol.*;
 
 import java.util.Random;
@@ -113,6 +114,8 @@ public class Client {
 
     public static void main(String[] args)  {
        // Client client = new Client(args[1],Integer.parseInt(args[2]));
+        //设置序列的协议类型
+        Protocol.setSerialize(new JsonSerialize());
         Client client = new Client("127.0.0.1",12701);
         client.start();
         //client.sendTestData();

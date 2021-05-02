@@ -1,6 +1,7 @@
 package netty.pro.protocol;
 
 import com.google.gson.Gson;
+import netty.pro.common.ObjectSerialize;
 
 /**
  * 协议接受
@@ -11,7 +12,7 @@ import com.google.gson.Gson;
  * 在后边是报文
  */
 
-public class Protocol {
+public class Protocol<T> {
     //协议头
     public final static int HEAD_SIZE = 4;
     //协议包的所在长度值为 [ 请求ID的8个字节+请求type的一个字节 + body的字节数]
@@ -22,7 +23,8 @@ public class Protocol {
     public final static int TYPE_LENGTH = 1;
 
 
-    public final static Gson serialize = new Gson();
+    public static ObjectSerialize serialize;
+
     private int version = 0xabef0101;
     //
     private int length = 0;// 消息长度
@@ -32,6 +34,10 @@ public class Protocol {
     private byte type;
     //
     private Message body;
+
+    public static  void setSerialize(ObjectSerialize ser) {
+        serialize = ser;
+    }
 
     public int getVersion() {
         return version;
@@ -75,7 +81,8 @@ public class Protocol {
             return null;
         }
         try {
-            byte[] bytes = serialize.toJson(body).getBytes("UTF-8");
+            //byte[] bytes = serialize.toJson(body).getBytes("UTF-8");
+            byte[] bytes = serialize.objectToByte(body);
             return bytes;
         } catch (Exception e) {
             return null;
@@ -90,7 +97,9 @@ public class Protocol {
      * @param bytes
      */
     public void ByteToObject(byte[] bytes) {
-        body = serialize.fromJson(new String(bytes), Message.class);
+
+       // body = serialize.fromJson(new String(bytes), Message.class);
+        body = serialize.ByteToObject(bytes, Message.class);
     }
 
     public String toString() {

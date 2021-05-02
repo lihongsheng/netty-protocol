@@ -9,8 +9,10 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.timeout.IdleStateHandler;
+import netty.pro.common.JsonSerialize;
 import netty.pro.protocol.Decoder;
 import netty.pro.protocol.Encoder;
+import netty.pro.protocol.Protocol;
 
 /**
  * @author xiongyongshun
@@ -21,6 +23,8 @@ import netty.pro.protocol.Encoder;
 public class Server {
     //启动服务
     public static void main(String[] args) throws Exception {
+        //设置序列的协议类型
+        Protocol.setSerialize(new JsonSerialize());
         System.out.println(String.format("启动成功:%d",12701));
         NioEventLoopGroup bossGroup = new NioEventLoopGroup(1);
         NioEventLoopGroup workGroup = new NioEventLoopGroup(4);

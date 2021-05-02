@@ -23,13 +23,13 @@ public class MessageHandle extends  ChannelHandlerAdapter{
 
         // 请求报文
         if (protocol.getType() == MessageType.REQ.value()) {
-            System.out.println("客户端-----1----::");
+            System.out.println("客户端-----1----::" + "CLIENT::" +protocol.getBody().getClassName());
             protocol.getBody().setClassName("CLIENT::" +protocol.getBody().getClassName());
             protocol.getBody().setMethodName("CLIENT::" +protocol.getBody().getMethodName());
             protocol.setType(MessageType.RESP.value());
             ctx.channel().writeAndFlush(protocol);
         } else if (protocol.getType() == MessageType.RESP.value()) {//应答报文
-            System.out.println("客户端-----2----::");
+            System.out.println("客户端-----2----::"+ "CLIENT::" +protocol.getBody().getClassName());
 //            protocol.getBody().setClassName("CLIENT::" +protocol.getBody().getClassName());
 //            protocol.getBody().setMethodName("CLIENT::" +protocol.getBody().getMethodName());
 //            protocol.setRequestId(System.currentTimeMillis());
