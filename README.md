@@ -51,7 +51,7 @@ netty 编写自定义协议例子
     
       有上边可知，由于TCP发送的报文不一定是一个完整的数据报文，所以需要netty缓存每次tcp的报文数据，当数据足够一个报文的时候，我们来处理。
     
-      ​          这里有个实现。一个是基于 io.netty.handler.codec.ByteToMessageDecoder来处理的类【CustomDecoder】，这个需要自己判断当前读取的缓存里数据长度和根据自己的协议类型从netty的缓存数据里取出数据做处理。另外一个是基于 io.netty.handler.codec.LengthFieldBasedFrameDecoder，这netty已经做好截取的处理，我们依托于这个类就可以【Decoder】，而且这个类做了数据错乱的或者恶意数据处理，我们依托于这个就行。
+      ​          这里有个实现。一个是基于 io.netty.handler.codec.ByteToMessageDecoder来处理的类，这个需要自己判断当前读取的缓存里数据长度和根据自己的协议类型从netty的缓存数据里取出数据做处理，实现的列子是【netty.pro.protocol.CustomDecoder】。另外一个是基于 io.netty.handler.codec.LengthFieldBasedFrameDecoder，这netty已经做好截取的处理，我们依托于这个类就可以，而且这个类做了数据错乱的或者恶意数据处理，我们依托于这个就行，实现的列子是【netty.pro.protocol.Decoder】。
     
     - 2.3 编写编码类。
     
@@ -60,3 +60,11 @@ netty 编写自定义协议例子
 + 3：定义自己处理数据报文的实际内容MessageHandle
 
     定义一个handle来处理实际的报文类型
+
+#### 第二阶段【基于Protobuf协议实现一个简单的RPC】
+
+##### 需要关注的点
+
+* 加载类的实现
+* 序列化对象
+* 反序列化对象，并且调用对象，并把返回的结果序列化返回
