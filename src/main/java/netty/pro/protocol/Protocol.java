@@ -1,6 +1,6 @@
 package netty.pro.protocol;
 
-import com.google.gson.Gson;
+import netty.pro.common.Message;
 import netty.pro.common.ObjectSerialize;
 
 /**
@@ -12,7 +12,7 @@ import netty.pro.common.ObjectSerialize;
  * 在后边是报文
  */
 
-public class Protocol<T> {
+public class Protocol {
     //协议头
     public final static int HEAD_SIZE = 4;
     //协议包的所在长度值为 [ 请求ID的8个字节+请求type的一个字节 + body的字节数]
@@ -33,7 +33,7 @@ public class Protocol<T> {
     //消息类 8位一个字节
     private byte type;
     //
-    private Message body;
+    private Object body;
 
     public static  void setSerialize(ObjectSerialize ser) {
         serialize = ser;
@@ -63,11 +63,11 @@ public class Protocol<T> {
         this.type = type;
     }
 
-    public Message getBody() {
+    public Object getBody() {
         return body;
     }
 
-    public void setBody(Message body) {
+    public void setBody(Object body) {
         this.body = body;
     }
 
@@ -85,6 +85,7 @@ public class Protocol<T> {
             byte[] bytes = serialize.objectToByte(body);
             return bytes;
         } catch (Exception e) {
+            System.out.println("异常##" + e.getMessage());
             return null;
         }
 
@@ -96,10 +97,10 @@ public class Protocol<T> {
      *
      * @param bytes
      */
-    public void ByteToObject(byte[] bytes) {
+    public void ByteToObject(byte[] bytes,Class<?> cls) {
 
-       // body = serialize.fromJson(new String(bytes), Message.class);
-        body = serialize.ByteToObject(bytes, Message.class);
+       // body = serialize.fromJson(bytes, Message.class);
+       body = serialize.ByteToObject(bytes, cls);
     }
 
     public String toString() {

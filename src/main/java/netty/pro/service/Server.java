@@ -9,10 +9,12 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.timeout.IdleStateHandler;
+import netty.pro.client.RpcHandle;
 import netty.pro.common.JsonSerialize;
 import netty.pro.protocol.Decoder;
 import netty.pro.protocol.Encoder;
 import netty.pro.protocol.Protocol;
+import netty.pro.ServerApi.ServerMap;
 
 /**
  * @author xiongyongshun
@@ -40,6 +42,7 @@ public class Server {
                             ch.pipeline().addLast(new Encoder());
                             ch.pipeline().addLast(new HeartIdelHandle(60, 60));
                             ch.pipeline().addLast(new MessageHandle());
+                            ch.pipeline().addLast(new RpcHandle());
                         }
                     });
 

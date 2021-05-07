@@ -3,11 +3,6 @@ package netty.pro.service;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.handler.timeout.IdleStateHandler;
-import netty.pro.common.HeartCustom;
-import netty.pro.protocol.Message;
-import netty.pro.protocol.MessageType;
-import netty.pro.protocol.Protocol;
-import io.netty.channel.SimpleChannelInboundHandler;
 
 public class HeartIdelHandle  extends IdleStateHandler{
 

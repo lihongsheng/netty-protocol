@@ -1,6 +1,7 @@
 package netty.pro.protocol;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import netty.pro.common.Message;
 
 public class Test {
 
@@ -24,7 +25,7 @@ public class Test {
         }
         byte[] bytes = new byte[bodyLength];
         frame.readBytes(bytes);
-        pro.ByteToObject(bytes);
+        pro.ByteToObject(bytes,Message.class);
         return pro;
     }
 
@@ -76,7 +77,7 @@ public class Test {
             Protocol pro2 = (Protocol) test.decode(sendBuf);
             System.out.println(pro2.getRequestId());
             if ((i%2) != 0) {
-                System.out.println(pro2.getBody().getClassName());
+                System.out.println(((Message)pro2.getBody()).getClassName());
             }
         }
 

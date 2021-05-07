@@ -3,6 +3,8 @@ package netty.pro.protocol;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import netty.pro.common.Message;
+import netty.pro.common.Response;
 
 import java.io.IOException;
 
@@ -69,7 +71,27 @@ public class Decoder extends LengthFieldBasedFrameDecoder {
         //获取报文
         byte[] bytes = new byte[bodyLength];
         frame.readBytes(bytes);
-        pro.ByteToObject(bytes);
+
+
+        System.out.println(" !!!----000---!!消息类型" + pro.getType());
+        //增加根据请求类型实例化不同的类
+        if (pro.getType() == MessageType.HEARTBEAT_REQ.value() ||
+                pro.getType() == MessageType.HEARTBEAT_RESP.value() ||
+                pro.getType() == MessageType.REQ.value() ||
+                pro.getType() == MessageType.RPC_REP.value() ||
+                pro.getType() == MessageType.RESP.value()) {//应答报文
+
+
+            pro.ByteToObject(bytes, Message.class);
+        }
+
+        //RPC应答包
+        if (pro.getType() == MessageType.RPC_RESP.value() ) {
+            System.out.println(" !!!---!!!!!----!!消息类型" + pro.getType());
+            pro.ByteToObject(bytes, Response.class);
+        }
+
+
         return pro;
     }
 

@@ -4,6 +4,7 @@ import java.util.List;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
+import netty.pro.common.Message;
 
 /**
  * 依托于ByteMessageDecode类
@@ -49,7 +50,7 @@ public class CustomDecoder extends  ByteToMessageDecoder{
         if (dataLength> 0) {
             byte[] bytes = new byte[dataLength];
             in.readBytes(bytes);
-            protocol.ByteToObject(bytes);
+           // protocol.ByteToObject(bytes, Message.class);
         }
         out.add(protocol);
     }
