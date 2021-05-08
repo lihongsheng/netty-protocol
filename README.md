@@ -63,7 +63,7 @@ netty 编写自定义协议例子
 
 实现的客户端入口为：netty.pro.client.Client; 服务端入口为：netty.pro.service.Server
 
-#### 第二阶段【基于Protobuf协议实现一个简单的RPC】
+#### 第二阶段【基于Json或者protobuf实现一个简单的RPC】
 
 ##### 需要关注的点
 
